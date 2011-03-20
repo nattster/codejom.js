@@ -19,10 +19,25 @@ function Jom(canvas){
 	
 	// node initialization
 	function newNode(name) { return new Node(name, context); };
-	this.nodes = [newNode("hello"), newNode("nattster")];
-	this.nodes[0].x = 10;
-	this.nodes[1].x = 100;
+	this.nodes = [];//[newNode("hello"), newNode("nattster"), newNode("eig"), newNode("KaewGB")];
+	for(var i=0; i < 100; i++)
+	{
+		var n = newNode("student"+i);
+		n.x = Math.random() * this.width;
+		n.y = Math.random() * this.height;
+		n.setDepth(parseInt(Math.random()*20));
+		this.nodes.push(n);
+	}
 	
+	// Physics simulator init
+	this.physics = new Physics(this);
+	
+	this.animate();
+};
+
+Jom.prototype.animate = function()
+{
+	this.physics.simulate();
 	this.draw();
 };
 

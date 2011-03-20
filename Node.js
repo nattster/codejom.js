@@ -9,6 +9,9 @@ function Node(name, context)
 	this.name = name;	// name of this node (displayed in a visualization)
 	this.x = 0;
 	this.y = 50;
+	this.vx = 0;
+	this.vy = 0;
+	this.depth = 0;
 	
 	// calculate width/height of this node based on its 'name'
 	this.context = context;
@@ -19,12 +22,16 @@ function Node(name, context)
 
 Node.prototype.margin = 4;
 
+Node.prototype.setDepth = function(depth){
+	this.depth = depth;
+};
+
 /***
  * Prepare a drawing context (can be called only once before drawing all nodes) 
  * @param context = drawing context of a <canvas>
  */
 Node.prototype.setStyle = function(){
-	this.context.font = 'bold 20px sans-serif';
+	this.context.font = '20px sans-serif';
 	this.context.textBaseline = 'top';
 };
 
