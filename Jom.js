@@ -20,7 +20,7 @@ function Jom(canvas){
 	// node initialization
 	function newNode(name) { return new Node(name, context); };
 	this.nodes = [];//[newNode("hello"), newNode("nattster"), newNode("eig"), newNode("KaewGB")];
-	for(var i=0; i < 100; i++)
+	for(var i=0; i < 300; i++)
 	{
 		var n = newNode("student"+i);
 		n.x = Math.random() * this.width;
@@ -49,8 +49,11 @@ Jom.prototype.draw = function()
 	
 	// draw nodes
 	this.nodes[0].setStyle();	// prepare brushes, fonts
+	var count  =0;
 	for(var index in this.nodes)
 	{
 		this.nodes[index].draw();
+		++count;
+		//if(count == 100) break;
 	}
 };

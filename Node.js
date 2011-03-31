@@ -4,6 +4,21 @@
  *  - draw itself on a canvas
  */
 
+
+        function randomRgb() {
+            // create the rgb string
+            var col =  "rgb("
+            + randomColor(255) + ","
+            + randomColor(255) + ","
+            + randomColor(255) + ")";
+            return col;
+        }
+
+
+        function randomColor(num) {          
+            return Math.floor(Math.random() * num);
+        }     
+        
 function Node(name, context)
 {
 	this.name = name;	// name of this node (displayed in a visualization)
@@ -12,6 +27,8 @@ function Node(name, context)
 	this.vx = 0;
 	this.vy = 0;
 	this.depth = 0;
+	this.color =randomRgb();
+	
 	
 	// calculate width/height of this node based on its 'name'
 	this.context = context;
@@ -41,7 +58,7 @@ Node.prototype.setStyle = function(){
  */
 Node.prototype.draw = function(){
 	// draw a white rectangle
-	this.context.fillStyle = '#FFFFFF';
+	this.context.fillStyle = this.color;//'#FFFFFF';
 	this.context.fillRect(this.x, this.y, this.width, this.height);
 	
 	// draw name
