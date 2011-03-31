@@ -20,7 +20,7 @@ function Jom(canvas){
 	// node initialization
 	function newNode(name) { return new Node(name, context); };
 	this.nodes = [];//[newNode("hello"), newNode("nattster"), newNode("eig"), newNode("KaewGB")];
-	for(var i=0; i < 300; i++)
+	for(var i=0; i < 100; i++)
 	{
 		var n = newNode("student"+i);
 		n.x = Math.random() * this.width;
@@ -44,16 +44,32 @@ Jom.prototype.animate = function()
 Jom.prototype.draw = function()
 {
 	// draw gradiant
+	this.context.save();
 	this.context.fillStyle = this.bgGradient;
 	this.context.fillRect(0, 0, this.width, this.height);
 	
 	// draw nodes
 	this.nodes[0].setStyle();	// prepare brushes, fonts
-	var count  =0;
+	count = 0;
 	for(var index in this.nodes)
 	{
-		this.nodes[index].draw();
 		++count;
-		//if(count == 100) break;
+		if(count % 100 == 0) break;
+		this.nodes[index].draw();
 	}
+	this.context.restore();
+};
+
+Jom.prototype.highlightReset = function()
+{
+	for(var index in this.nodes)
+	{
+		this.nodes[index].setAlpha(0.2);
+	}
+};
+
+Jom.prototype.highlightNode = function(node_id)
+{
+	this.highlightReset();
+	this.nodes[node_id].setAlpha(1);
 };

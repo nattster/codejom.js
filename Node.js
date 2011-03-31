@@ -4,20 +4,18 @@
  *  - draw itself on a canvas
  */
 
+function randomRgb() {
+    // create the rgb string
+    var col =  "rgb("
+    + randomColor(255) + ","
+    + randomColor(255) + ","
+    + randomColor(255) + ")";
+    return col;
+}
 
-        function randomRgb() {
-            // create the rgb string
-            var col =  "rgb("
-            + randomColor(255) + ","
-            + randomColor(255) + ","
-            + randomColor(255) + ")";
-            return col;
-        }
-
-
-        function randomColor(num) {          
-            return Math.floor(Math.random() * num);
-        }     
+function randomColor(num) {          
+    return Math.floor(Math.random() * num);
+}     
         
 function Node(name, context)
 {
@@ -27,7 +25,9 @@ function Node(name, context)
 	this.vx = 0;
 	this.vy = 0;
 	this.depth = 0;
-	this.color =randomRgb();
+	this.alpha = 1;
+	this.bgColor = '#FFFFFF';// randomRgb();
+	this.fontColor = '#000000';
 	
 	
 	// calculate width/height of this node based on its 'name'
@@ -37,7 +37,17 @@ function Node(name, context)
 	this.height = 20 + 2*this.margin;
 };
 
+/***
+ * Avoid using too much memory by storing functions in Node's prototype 
+ */
+
 Node.prototype.margin = 4;
+
+Node.prototype.setAlpha = function(alpha) {
+	this.alpha = alpha;
+	this.bgColor = 'rgba(255,255,255,'+alpha+')';
+	this.fontColor = 'rgba(0,0,0,'+alpha+')';
+};
 
 Node.prototype.setDepth = function(depth){
 	this.depth = depth;
@@ -57,11 +67,13 @@ Node.prototype.setStyle = function(){
  * @param context = drawing context of a <canvas>
  */
 Node.prototype.draw = function(){
+	this.context.save();
 	// draw a white rectangle
-	this.context.fillStyle = this.color;//'#FFFFFF';
+	this.context.fillStyle = this.bgColor;
 	this.context.fillRect(this.x, this.y, this.width, this.height);
 	
 	// draw name
-	this.context.fillStyle = '#000000';
+	this.context.fillStyle = this.fontColor;
 	this.context.fillText(this.name, this.x+this.margin, this.y+this.margin);
+	this.context.restore();
 };

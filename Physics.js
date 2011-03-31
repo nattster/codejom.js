@@ -7,12 +7,11 @@ function Physics(jom)
 	    nodes = jom.nodes,
 	    time = 0;
 	
-	var blockWidth = 50,		// width (in pixel) of each block in grid
+	var blockWidth = 70,		// width (in pixel) of each block in grid
 		blockHeight = 50,		// height
 		grid = [],
 		gridWidth = 0,			// number of blocks in horizontal
 		gridHeight = 0;			// 					   vertical
-	
 	
 	// initialize Grid
 	gridWidth = Math.ceil(jom.width / blockWidth);
@@ -52,8 +51,8 @@ function Physics(jom)
 					var a = nodes[index], b = nodes[index2];
 					if(hit(a, b))
 					{
-						var t = Math.random()*0.2;
-						var ty = Math.random()*0.2;
+						var t = Math.random()*0.1;
+						var ty = Math.random()*0.1;
 						if(a.x < b.x)
 						{
 							a.vx -= t;
@@ -92,7 +91,8 @@ function Physics(jom)
 			time = 0;
 		}
 		
-
+		// floating
+		// global left-right brownian
 		for(var index in nodes)
 		{
 			var n = nodes[index];
@@ -104,7 +104,7 @@ function Physics(jom)
 			if(n.x < 0)
 			{
 				n.vx += 1;
-			} else if(n.x > jom.width) {
+			} else if(n.x + n.width > jom.width) {
 				n.vx += -1;
 			} else {
 				n.vx += (Math.random() - 0.5) * 0.25;
